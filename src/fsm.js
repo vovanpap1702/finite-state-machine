@@ -190,8 +190,8 @@ class FSM {
      * Clears transition history
      */
     clearHistory() {
-        this.usteps.clear();
-        this.rsteps.clear();
+        this.usteps=[];
+        this.rsteps.clear=[];
     }
 }
 
