@@ -46,31 +46,47 @@ class FSM {
      * Changes state according to event transition rules.
      * @param event
      */
-    trigger(event)
-    {
-        if (event===this.states.normal.transitions.study) {
+    trigger (event) {
+        if (event==='get_hungry'){
+            if (this.initial==='sleeping'||this.initial==='busy'){
+                this.initial='hungry';
+            }
+            else {
+                throw new Error();
+            }
 
-            return;
         }
-        else if (event===this.states.busy.transitions.get_tired) {
-
-            return;
+        else if (event==='get_tired') {
+            if (this.initial==='busy') {
+                this.initial = 'sleeping';
+            }
+            else {
+                throw new Error();
+            }
         }
-        else if (event===this.states.busy.transitions.get_hungry) {
-
-            return;
+        else if (event==='study') {
+            if (this.initial==='normal') {
+                this.initial = 'busy';
+            }
+            else {
+                throw new Error();
+            }
         }
-        else if (event===this.states.hungry.transitions.eat) {
-
-            return;
+        else if (event==='eat') {
+            if(this.initial==='hungry') {
+                this.initial = 'normal';
+            }
+            else {
+                throw new Error();
+            }
         }
-        else if (event===this.states.sleeping.transitions.get_hungry) {
-
-            return;
-        }
-        else if (event===this.states.sleeping.transitions.get_up) {
-
-            return;
+        else if (event==='get_up') {
+            if (this.initial==='sleeping') {
+                this.initial = 'normal';
+            }
+            else {
+                throw new Error();
+            }
         }
         else{
             throw new Error();
@@ -81,9 +97,10 @@ class FSM {
      * Resets FSM state to initial.
      */
     reset() {
-        this.initial=this.begin;
+        this.initial='normal';
 
     }
+    //
 
     /**
      * Returns an array of states for which there are specified event transition rules.
@@ -93,7 +110,29 @@ class FSM {
      */
     getStates(event)
     {
-        return this.initial;
+        if (event==='get_hungry')
+        {
+            return ['busy', 'sleeping'];
+
+        }
+        else if (event==='get_tired') {
+            return ['busy'];
+        }
+        else if (event==='study') {
+            return ['normal'];
+        }
+        else if (event==='eat') {
+            return ['hungry'];
+        }
+        else if (event==='get_up') {
+            return ['sleeping']
+        }
+        else if (event===undefined) {
+           return ['normal', 'busy', 'hungry', 'sleeping'];
+        }
+        else{
+            return [];
+        }
     }
 
     /**
