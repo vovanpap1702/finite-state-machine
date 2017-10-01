@@ -167,8 +167,15 @@ class FSM {
      * @returns {Boolean}
      */
     redo() {
-        this.usteps.push(this.initial);
-        this.initial=this.rsteps.pop();
+        if(this.rsteps===0) {
+            return false;
+        }
+        else {
+            this.usteps.push(this.initial);
+            this.initial = this.rsteps.pop();
+            return true;
+        }
+
     }
 
     /**
