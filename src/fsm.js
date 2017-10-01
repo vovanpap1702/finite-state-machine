@@ -5,6 +5,8 @@ class FSM {
      */
     constructor(config)
     {
+        this.usteps=[];
+        this.rsteps=[];
         this.begin=config.initial;
         this.initial=config.initial;
         this.states=config.states;
@@ -34,6 +36,7 @@ class FSM {
     {
         if(state=="hungry"||state=="busy"||state=="normal"||state=="sleeping")
         {
+            this.usteps.push(this.initial);
             this.initial=state;
         }
         else
@@ -49,6 +52,7 @@ class FSM {
     trigger (event) {
         if (event==='get_hungry'){
             if (this.initial==='sleeping'||this.initial==='busy'){
+                this.usteps.push(this.initial);
                 this.initial='hungry';
             }
             else {
@@ -58,6 +62,7 @@ class FSM {
         }
         else if (event==='get_tired') {
             if (this.initial==='busy') {
+                this.usteps.push(this.initial);
                 this.initial = 'sleeping';
             }
             else {
@@ -66,6 +71,7 @@ class FSM {
         }
         else if (event==='study') {
             if (this.initial==='normal') {
+                this.usteps.push(this.initial);
                 this.initial = 'busy';
             }
             else {
@@ -74,6 +80,7 @@ class FSM {
         }
         else if (event==='eat') {
             if(this.initial==='hungry') {
+                this.usteps.push(this.initial);
                 this.initial = 'normal';
             }
             else {
@@ -82,6 +89,7 @@ class FSM {
         }
         else if (event==='get_up') {
             if (this.initial==='sleeping') {
+                this.usteps.push(this.initial);
                 this.initial = 'normal';
             }
             else {
@@ -140,14 +148,28 @@ class FSM {
      * Returns false if undo is not available.
      * @returns {Boolean}
      */
-    undo() {}
+    undo() {
+        if(this.usteps.length===0)
+        {
+            return false;
+        }
+        else {
+            this.initial=this.usteps.pop();
+            this.rsteps.push(this.initial);
+            return true;
+        }
+
+    }
 
     /**
      * Goes redo to state.
      * Returns false if redo is not available.
      * @returns {Boolean}
      */
-    redo() {}
+    redo() {
+        this.usteps.push(this.initial);
+        this.initial=this.rsteps.pop();
+    }
 
     /**
      * Clears transition history
