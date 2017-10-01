@@ -37,6 +37,7 @@ class FSM {
         if(state=="hungry"||state=="busy"||state=="normal"||state=="sleeping")
         {
             this.usteps.push(this.initial);
+            this.rsteps=[];
             this.initial=state;
         }
         else
@@ -52,6 +53,7 @@ class FSM {
     trigger (event) {
         if (event==='get_hungry'){
             if (this.initial==='sleeping'||this.initial==='busy'){
+                this.rsteps=[];
                 this.usteps.push(this.initial);
                 this.initial='hungry';
             }
@@ -62,6 +64,7 @@ class FSM {
         }
         else if (event==='get_tired') {
             if (this.initial==='busy') {
+                this.rsteps=[];
                 this.usteps.push(this.initial);
                 this.initial = 'sleeping';
             }
@@ -71,6 +74,7 @@ class FSM {
         }
         else if (event==='study') {
             if (this.initial==='normal') {
+                this.rsteps=[];
                 this.usteps.push(this.initial);
                 this.initial = 'busy';
             }
@@ -80,6 +84,7 @@ class FSM {
         }
         else if (event==='eat') {
             if(this.initial==='hungry') {
+                this.rsteps=[];
                 this.usteps.push(this.initial);
                 this.initial = 'normal';
             }
@@ -89,6 +94,7 @@ class FSM {
         }
         else if (event==='get_up') {
             if (this.initial==='sleeping') {
+                this.rsteps=[];
                 this.usteps.push(this.initial);
                 this.initial = 'normal';
             }
@@ -106,6 +112,8 @@ class FSM {
      */
     reset() {
         this.initial=this.begin;
+        this.rsteps=[];
+        this.usteps=[];
 
     }
     //
@@ -167,7 +175,7 @@ class FSM {
      * @returns {Boolean}
      */
     redo() {
-        if(this.rsteps===0) {
+        if(this.rsteps.length===0) {
             return false;
         }
         else {
