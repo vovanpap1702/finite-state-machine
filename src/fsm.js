@@ -162,8 +162,8 @@ class FSM {
             return false;
         }
         else {
-            this.initial=this.usteps.pop();
             this.rsteps.push(this.initial);
+            this.initial=this.usteps.pop();
             return true;
         }
 
