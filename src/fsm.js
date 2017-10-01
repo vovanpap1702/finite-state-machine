@@ -5,6 +5,7 @@ class FSM {
      */
     constructor(config)
     {
+        this.begin=config.initial;
         this.initial=config.initial;
         this.states=config.states;
         this.states.normal.transitions.study=config.states.normal.transitions.study;
@@ -35,18 +36,54 @@ class FSM {
         {
             this.initial=state;
         }
+        else
+        {
+            throw new Error();
+        }
     }
 
     /**
      * Changes state according to event transition rules.
      * @param event
      */
-    trigger(event) {}
+    trigger(event)
+    {
+        if (event===this.states.normal.transitions.study) {
+
+            return;
+        }
+        else if (event===this.states.busy.transitions.get_tired) {
+
+            return;
+        }
+        else if (event===this.states.busy.transitions.get_hungry) {
+
+            return;
+        }
+        else if (event===this.states.hungry.transitions.eat) {
+
+            return;
+        }
+        else if (event===this.states.sleeping.transitions.get_hungry) {
+
+            return;
+        }
+        else if (event===this.states.sleeping.transitions.get_up) {
+
+            return;
+        }
+        else{
+            throw new Error();
+        }
+    }
 
     /**
      * Resets FSM state to initial.
      */
-    reset() {}
+    reset() {
+        this.initial=this.begin;
+
+    }
 
     /**
      * Returns an array of states for which there are specified event transition rules.
@@ -54,7 +91,10 @@ class FSM {
      * @param event
      * @returns {Array}
      */
-    getStates(event) {}
+    getStates(event)
+    {
+        return this.initial;
+    }
 
     /**
      * Goes back to previous state.
