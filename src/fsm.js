@@ -97,7 +97,7 @@ class FSM {
      * Resets FSM state to initial.
      */
     reset() {
-        this.initial='normal';
+        this.initial=this.begin;
 
     }
     //
