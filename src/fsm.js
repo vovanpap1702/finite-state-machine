@@ -181,7 +181,10 @@ class FSM {
     /**
      * Clears transition history
      */
-    clearHistory() {}
+    clearHistory() {
+        this.usteps.clear();
+        this.rsteps.clear();
+    }
 }
 
 module.exports = FSM;
